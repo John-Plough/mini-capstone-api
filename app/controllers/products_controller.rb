@@ -17,7 +17,11 @@ class ProductsController < ApplicationController
       image_url: params[:image_url],
       description: params[:description]
       )
-    render :show
+    if @product.valid?
+      render :show
+    else
+      render json: { errors: @product.errors.full_messages }, status: 422
+    end
   end
 
   def update
@@ -28,7 +32,11 @@ class ProductsController < ApplicationController
       image_url: params[:image_url] || @product.image_url,
       description: params[:description] || @product.description
       )
+    if @product.valid?
       render :show
+    else
+      render json: { errors: @product.errors.full_messages }, status: 422
+    end
   end
 
   def destroy
