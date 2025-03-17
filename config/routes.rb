@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
   post "/users" => "users#create"
 
+  post "/sessions" => "sessions#create"
+  delete "/sessions" => "sessions#destroy"
+
+
   get "/products" => "products#index"
   post "/products" => "products#create"
   get "/products/:id" => "products#show"
