@@ -5,13 +5,15 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
   validates :description, presence: true
   validates :description, length: { in: 1..500 }
-  
+
+  has_many :orders
+
   has_many :images
   belongs_to :supplier
   # def supplier
   #   Supplier.find_by(id: supplier_id)
   # end
-  
+
   def is_discounted?
     price <= 10
   end
@@ -23,5 +25,4 @@ class Product < ApplicationRecord
   def total
     price + tax
   end
-
 end
