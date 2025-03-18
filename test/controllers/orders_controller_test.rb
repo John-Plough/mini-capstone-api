@@ -15,4 +15,12 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal [ "user_id", "product_id", "quantity", "subtotal", "tax", "created_at", "updated_at" ], data.keys
   end
+
+  test "index" do
+    get "/orders.json"
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal Order.count, data.length
+  end
 end

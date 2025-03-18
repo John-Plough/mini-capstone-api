@@ -15,4 +15,9 @@ class OrdersController < ApplicationController
     @order = Order.find_by(id: params[:id])
     render :show
   end
+
+  def index
+    @orders = Order.all
+    render :index
+  end
 end
