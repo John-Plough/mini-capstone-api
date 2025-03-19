@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  
+  before_action :authenticate_admin, except: [ :index, :show ]
   def index
     @products = Product.all
     render :index
@@ -44,5 +44,4 @@ class ProductsController < ApplicationController
     @product.destroy
     render json: { message: "recipe DESTROYED!" }
   end
-  
 end
