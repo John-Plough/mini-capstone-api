@@ -1,4 +1,9 @@
 class CartedProductsController < ApplicationController
+  def index
+    @carted_products = CartedProduct.where(user_id: current_user.id, status: "carted")
+    render :index
+  end
+
   def create
     @carted_product = CartedProduct.create(
       user_id: current_user.id,
@@ -7,11 +12,16 @@ class CartedProductsController < ApplicationController
       status: "carted",
       order_id: nil
     )
-    render :show
+    if @carted_product.valid?
+      render :show
+    else
+      render json: { errors: @carted_product.errors.full_messages }, status: 422
+    end
   end
 
-  def index
-    @carted_products = current_user.carted_products
-    render :index
+  def destroy
+    carted_product = CartedProduct.find_by(id: params[:id])
+    carted_product.update(status: "removed")
+    render json: { message: "successfully destroyed carted product!" }
   end
 end
